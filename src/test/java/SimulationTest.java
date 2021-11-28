@@ -38,7 +38,6 @@ public class SimulationTest {
     public void runSimulationComputerRandom() {
         BurnStream burnSource = new OnBoardComputer();
         Simulation game = new Simulation(new Vehicle(Simulation.randomaltitude()));
-        //Simulation game = new Simulation(new Vehicle(15000));
         int okay = game.runSimulation(burnSource);
         Assert.assertEquals(okay, Vehicle.SUCCESS);
     }

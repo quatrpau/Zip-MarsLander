@@ -8,7 +8,7 @@ public class BurnDataStream implements BurnStream {
     //speed drop to 0(must start at 4501 meters and with 1000 velo) 200 * 10
     //finally one last 99 to bridge the gap to the ground
     //10000
-    int burnArray[] = {0, 1,199, 100, 200, 200,200, 200, 200, 200, 200, 200, 200, 200, 200,99};
+    int burnArray[] = {1, 99,0, 200, 200, 200,200, 200, 200, 200, 200, 200, 200, 200, 200,99};
     //20000
     //int burnArray[] = {0, 1,199, 100, 200,100,100,100,100,100,100,100,100,100,100, 200,200, 200, 200, 200, 200, 200, 200, 200, 200,99};
     //5501 = magic number
