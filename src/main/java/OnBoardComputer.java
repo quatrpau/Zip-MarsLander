@@ -3,15 +3,16 @@ import java.util.Arrays;
 import java.util.List;
 
 public class OnBoardComputer implements BurnStream {
-    //phase 1: make alt % 1000 == 501;
+    //phase 1: make alt % 1000 == 501; //(BURN ALIGNER)
         //second number in sequence should control the tens' and ones' places (the difference of number and 100)
         //and third number should immediately go back to the original
-    //phase 2: burn off thousands place of speed to 5501 (if needed)
-    //phase 3: 10 consecutive bursts of 200 burn
+    //phase 2: burn off thousands place of speed to 5501 (if needed) (DESCENDER)
+    //phase 3: 10 consecutive bursts of 200 burn (SPEED CUTTER)
     //phase 4: 1 burn of 99
-    //aircraft from this height will always successfully land after 110 seconds
-    public static final int MAGIC_HEIGHT = 5501;
-    public static final int TEN_TURNS_HEIGHT = 4501;
+    //aircraft from this height will always successfully land after 100 seconds
+    public static final int MAGIC_HEIGHT = 4501;
+    //after completing phase 3; aircraft will then execute a burn of BURN_FINALE and will land safely everytime
+    public static final int BURN_FINALE = 99;
     public List<Integer> burns;
     public int Index = -1;
     public int Phase = 0;
@@ -39,8 +40,21 @@ public class OnBoardComputer implements BurnStream {
             }
             Phase++;
             Index = -1;
-            
+            burns = speedCutter();
         }
+        if(Phase == 3){
+            if(Index< burns.size() - 1){
+                Index++;
+                System.out.println(burns.get(Index));
+                return burns.get(Index);
+            }
+            Phase++;
+        }
+        if(Phase == 4){
+            System.out.println(BURN_FINALE);
+            return BURN_FINALE;
+        }
+        //nothing should ever reach this statement;
         return 0;
     }
     //preconditions 20000>= start >= 10000
@@ -53,7 +67,6 @@ public class OnBoardComputer implements BurnStream {
         List<Integer> hundalign = new ArrayList<Integer>();
         //tens place
         int tens = start % 100;
-        System.out.println("HUNDREDS:" + (start%1000)/100);
         switch((start % 1000) / 100){
             case 1:
                 hundalign.addAll(Arrays.asList(100,0,200));
@@ -94,12 +107,19 @@ public class OnBoardComputer implements BurnStream {
     }
     //precondition leftToGo will always be divisible by 1000
     private List<Integer> descender(int height){
-        int leftToGo = height - TEN_TURNS_HEIGHT;
+        int leftToGo = height - MAGIC_HEIGHT;
         List<Integer> descender = new ArrayList<>();
         while(leftToGo > 0){
             descender.add(100);
             leftToGo-=1000;
         }
         return descender;
+    }
+    private List<Integer> speedCutter(){
+        List<Integer> speedCutter = new ArrayList<>();
+        for (int i = 0; i < 10; i++) {
+            speedCutter.add(200);
+        }
+        return speedCutter;
     }
 }
