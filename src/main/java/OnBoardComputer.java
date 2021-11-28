@@ -67,6 +67,7 @@ public class OnBoardComputer implements BurnStream {
         List<Integer> hundalign = new ArrayList<Integer>();
         //tens place
         int tens = start % 100;
+        //System.out.println("HUDREDS" + (start%1000) /100);
         switch((start % 1000) / 100){
             case 1:
                 hundalign.addAll(Arrays.asList(100,0,200));
@@ -89,9 +90,11 @@ public class OnBoardComputer implements BurnStream {
             case 7:
                 hundalign.addAll(Arrays.asList(200,100,100,0));
                 break;
-            case 8: case 9:
+            case 8:
                 hundalign.addAll(Arrays.asList(200,100,0));
                 break;
+            case 9:
+                hundalign.addAll(Arrays.asList(200,0));
             default:
                 hundalign.addAll(Arrays.asList(100,100));
         }
