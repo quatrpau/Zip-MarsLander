@@ -48,14 +48,5 @@ public class SimulationTest {
         int okay = game.runSimulation(burner);
         Assert.assertEquals(okay, Vehicle.SUCCESS);
     }
-    /**
-    Test
-    public void impossibleSimulation(){
-        BurnStream burner = new BurnDataStream();
-        Simulation game = new Simulation(new Vehicle(4404));
-        int okay = game.runSimulation(burner);
-        Assert.assertEquals(okay, Vehicle.SUCCESS);
-    }
-     */
 
 }
