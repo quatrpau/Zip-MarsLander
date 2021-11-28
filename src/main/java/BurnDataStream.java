@@ -11,7 +11,7 @@ public class BurnDataStream implements BurnStream {
     int burnArray[] = {1, 99,0, 200, 200, 200,200, 200, 200, 200, 200, 200, 200, 200, 200,99};
     //20000
     //int burnArray[] = {0, 1,199, 100, 200,100,100,100,100,100,100,100,100,100,100, 200,200, 200, 200, 200, 200, 200, 200, 200, 200,99};
-    //5501 = magic number
+    //5501 = magic number or 4501 if 1000 has already been subtracted
     int burnIdx = -1;
     public BurnDataStream() { }
     public BurnDataStream(int[] burns) {

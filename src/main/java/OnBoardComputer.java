@@ -11,6 +11,7 @@ public class OnBoardComputer implements BurnStream {
     //phase 4: 1 burn of 99
     //aircraft from this height will always successfully land after 110 seconds
     public static final int MAGIC_HEIGHT = 5501;
+    public static final int TEN_TURNS_HEIGHT = 4501;
     public List<Integer> burns;
     public int Index = -1;
     public int Phase = 0;
@@ -23,15 +24,27 @@ public class OnBoardComputer implements BurnStream {
         if(Phase == 1){
             if(Index < burns.size() - 1){
                 Index++;
+                System.out.println(burns.get(Index));
                 return burns.get(Index);
             }
             Phase++;
             Index = -1;
+            burns = descender(status.getAltitude());
+        }
+        if(Phase == 2){
+            if(Index < burns.size() - 1){
+                Index++;
+                System.out.println(burns.get(Index));
+                return burns.get(Index);
+            }
+            Phase++;
+            Index = -1;
+            
         }
         return 0;
     }
     //preconditions 20000>= start >= 10000
-    public List<Integer> burnAligner(int start){
+    private List<Integer> burnAligner(int start){
         //+- 100
         //init starting velo 1000
         //last height must reach 1000 within one turn
@@ -40,30 +53,31 @@ public class OnBoardComputer implements BurnStream {
         List<Integer> hundalign = new ArrayList<Integer>();
         //tens place
         int tens = start % 100;
+        System.out.println("HUNDREDS:" + (start%1000)/100);
         switch((start % 1000) / 100){
             case 1:
-                hundalign.addAll(Arrays.asList(100,0));
+                hundalign.addAll(Arrays.asList(100,0,200));
                 break;
             case 2:
-                hundalign.addAll(Arrays.asList(100,0,100));
+                hundalign.addAll(Arrays.asList(100,0,100,200));
                 break;
             case 3:
-                hundalign.addAll(Arrays.asList(100,0,100,100));
+                hundalign.addAll(Arrays.asList(100,0,100,100,200));
                 break;
             case 4:
-                hundalign.addAll(Arrays.asList(100,0,0,200));
+                hundalign.addAll(Arrays.asList(100,0,0,200,200));
                 break;
             case 5:
-                hundalign.addAll(Arrays.asList(200,100,100,100,100));
+                hundalign.addAll(Arrays.asList(200,100,100,100,100,0));
                 break;
             case 6:
-                hundalign.addAll(Arrays.asList(200,100,100,100));
+                hundalign.addAll(Arrays.asList(200,100,100,100,0));
                 break;
             case 7:
-                hundalign.addAll(Arrays.asList(200,100,100));
+                hundalign.addAll(Arrays.asList(200,100,100,0));
                 break;
             case 8: case 9:
-                hundalign.addAll(Arrays.asList(200,100));
+                hundalign.addAll(Arrays.asList(200,100,0));
                 break;
             default:
                 hundalign.addAll(Arrays.asList(100,100));
@@ -77,5 +91,15 @@ public class OnBoardComputer implements BurnStream {
         //if 100; 100,99 == 1; 1000 -> 1099
         in = (-in) + 100 + addend;
         return (-in) + 100;
+    }
+    //precondition leftToGo will always be divisible by 1000
+    private List<Integer> descender(int height){
+        int leftToGo = height - TEN_TURNS_HEIGHT;
+        List<Integer> descender = new ArrayList<>();
+        while(leftToGo > 0){
+            descender.add(100);
+            leftToGo-=1000;
+        }
+        return descender;
     }
 }
