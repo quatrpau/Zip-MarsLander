@@ -6,7 +6,7 @@ public class OnBoardComputer implements BurnStream {
     //phase 1: make alt % 1000 == 501; //(BURN ALIGNER)
         //second number in sequence should control the tens' and ones' places (the difference of number and 100)
         //and third number should immediately go back to the original
-    //phase 2: burn off thousands place of speed to 5501 (if needed) (DESCENDER)
+    //phase 2: burn off thousands place of speed to 4501 (if needed) (DESCENDER)
     //phase 3: 10 consecutive bursts of 200 burn (SPEED CUTTER)
     //phase 4: 1 burn of 99 (BURN_FINALE)
     //aircraft from this height will always successfully land after 100 seconds (using SPEED CUTTER)
