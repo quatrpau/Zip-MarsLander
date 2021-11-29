@@ -8,8 +8,8 @@ public class OnBoardComputer implements BurnStream {
         //and third number should immediately go back to the original
     //phase 2: burn off thousands place of speed to 5501 (if needed) (DESCENDER)
     //phase 3: 10 consecutive bursts of 200 burn (SPEED CUTTER)
-    //phase 4: 1 burn of 99
-    //aircraft from this height will always successfully land after 100 seconds
+    //phase 4: 1 burn of 99 (BURN_FINALE)
+    //aircraft from this height will always successfully land after 100 seconds (using SPEED CUTTER)
     public static final int MAGIC_HEIGHT = 4501;
     //after completing phase 3; aircraft will then execute a burn of BURN_FINALE and will land safely everytime
     public static final int BURN_FINALE = 99;
@@ -67,7 +67,6 @@ public class OnBoardComputer implements BurnStream {
         List<Integer> hundalign = new ArrayList<Integer>();
         //tens place
         int tens = start % 100;
-        //System.out.println("HUDREDS" + (start%1000) /100);
         switch((start % 1000) / 100){
             case 1:
                 hundalign.addAll(Arrays.asList(100,0,200));
@@ -95,6 +94,7 @@ public class OnBoardComputer implements BurnStream {
                 break;
             case 9:
                 hundalign.addAll(Arrays.asList(200,0));
+                break;
             default:
                 hundalign.addAll(Arrays.asList(100,100));
         }
@@ -102,6 +102,7 @@ public class OnBoardComputer implements BurnStream {
         hundalign.set(1,burnAdder(hundalign.get(1),-tens));
         return hundalign;
     }
+    //translates desired velocity into acceleration and adds it to in
     private int burnAdder(int in,int addend){
         //if 200; 200,99 == 101; 900 -> 999
         //if 100; 100,99 == 1; 1000 -> 1099
